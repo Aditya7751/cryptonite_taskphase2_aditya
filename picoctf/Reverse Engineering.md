@@ -5,7 +5,10 @@ First of all I research into the GNU Debugger(``GDB``) , due to it being stated 
 , after this I download the file given in the challenge `debugger0_a` , after going through a `ctf101` page describing how gdb is used in reverse engineering I figure out that you have to disassemble the file, after watching a youtube video I figure out the syntax and functions required to go through with the disassembly,
 afterwards I use `set disassembly-flavor intel` since gdb uses at&t as default, although this is mostly about how people want their data represented
 afterwards I run `disassemble main` as hint 2 suggests that I have to do so.
-After some Observation I see that the `eax` register has a value `0x86342` which is a hexadecimal number, I use an online hexadecimal to decimal converter to get the flag, ( 86432 in hexadecimal = 549698 in decimal)
+After some Observation I see that the `eax` register has a value `0x86342` which is a hexadecimal number, I use an online hexadecimal to decimal converter to get the flag, ( 86342 in hexadecimal = 549698 in decimal)
+
+![image](https://github.com/user-attachments/assets/e5114305-db7d-43ea-b3df-3c2c05e75232)
+
 
 
 ## Code
