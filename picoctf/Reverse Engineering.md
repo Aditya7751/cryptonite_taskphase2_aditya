@@ -57,3 +57,12 @@ Dump of assembler code for function main:
    0x000000000000113e <+21>:    ret
 End of assembler dump.
 ```
+## Concepts Learnt
+- Basic GDB usage
+- disassembling programs
+- register values
+## References
+- https://ctf101.org/reverse-engineering/what-is-gdb/
+- https://visualgdb.com/gdbreference/commands/set_disassembly-flavor
+- https://visualgdb.com/gdbreference/commands/disassemble
+- https://www.youtube.com/watch?v=B03p00ibkVU
