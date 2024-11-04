@@ -69,3 +69,68 @@ End of assembler dump.
 - https://visualgdb.com/gdbreference/commands/set_disassembly-flavor
 - https://visualgdb.com/gdbreference/commands/disassemble
 - https://www.youtube.com/watch?v=B03p00ibkVU
+
+# Vault Door 3
+FLAG - **picoCTF{jU5t_a_s1mpl3_an4gr4m_4_u_c79a21}**
+## Understanding the Problem
+1. The Entered Password has to be 32 characters long
+   
+![image](https://github.com/user-attachments/assets/4aafb243-ff36-4242-810d-e5ae22bc5251)
+
+2. The First 8 characters(indices 0 to 7) of the buffer and the entered password have to be the same
+
+![image](https://github.com/user-attachments/assets/7ac720d3-a33e-4937-be14-a728f1525a20)
+
+3.The 9th to 16th characters of the buffer are the same  the (23-i)th element of the entered password
+
+![image](https://github.com/user-attachments/assets/34f845da-4e0d-4dcd-92c4-cca0af52b6e5)
+
+4.The i increments in intervals of 2 from the 16th index to the 30th index(so even elements from 16), now these indices of the buffer are equal to the (46-i)th element of the password
+
+![image](https://github.com/user-attachments/assets/7e1971d0-aef1-48b2-95c7-44d858108daf)
+
+5. The Odd indices from 31 to 17 of the buffer are equal to the same index of the password
+
+![image](https://github.com/user-attachments/assets/00925b3f-9a2e-4b1e-a042-5ba5dfe3ef54)
+
+6. The Buffer has to be the same as "jU5t_a_sna_3lpm12g94c_u_4_m7ra41" for it to return true
+   
+![image](https://github.com/user-attachments/assets/7b9505c3-5fa4-4bd1-a155-96bf2ecaeb90)
+
+## Approach
+
+To Reverse this shuffling of letters, I use the same transformations , but interchanging the buffer and password variables, and also reversing the order of the operations that took place in the given program
+
+```java
+import java.util.*;
+
+public class VaultCrack {
+    public static void main(String[] args) {
+        String buffer="jU5t_a_sna_3lpm12g94c_u_4_m7ra41";
+        char[] password=new char[32];
+        int i;
+        for (i=31; i>=17; i-=2) {
+            password[i] = buffer.charAt(i);
+        }
+        for(i=16;i<32;i+=2){
+            password[i]=buffer.charAt(46-i);
+        }
+        for(i=8;i<16;i++){
+            password[i]=buffer.charAt(23-i);
+        }
+        for(i=0;i<8;i++){
+            password[i]=buffer.charAt(i);
+        }
+        String ans=new String(password);
+        System.out.println(ans);
+    }
+}
+```
+## Incorrect Tangents
+- Intially I tried to crack the program with "jU5t_a_sna_3lpm12g94c_u_4_m7ra41" as a password, but realized it was a medium problem for a reason
+- I remember messing up the loops for this for a long time because I didnt read the initial program properly and kept initliazing i=0 in every loop out of habit
+
+## Concepts Learnt
+- Following how the logic flows through in problems, and also how to approach reversing them
+- Reading the Question Properly
+
