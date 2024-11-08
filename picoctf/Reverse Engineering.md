@@ -1,7 +1,7 @@
 # GDB baby step 1
 **FLAG** - picoCTF{549698}
 ## Approach:
-First of all I research into the GNU Debugger(``GDB``) , due to it being stated in the challenge name, and also the first hint talking about it
+First of all I research about the GNU Debugger(``GDB``) , due to it being stated in the challenge name, and also the first hint talking about it
 , after this I download the file given in the challenge `debugger0_a` , after going through a `ctf101` page describing how gdb is used in reverse engineering I figure out that you have to disassemble the file, after watching a youtube video I figure out the syntax and functions required to go through with the disassembly,
 afterwards I use `set disassembly-flavor intel` since gdb uses at&t as default, although this is mostly about how people want their data represented
 afterwards I run `disassemble main` as hint 2 suggests that I have to do so.
@@ -134,3 +134,37 @@ public class VaultCrack {
 - Following how the logic flows through in problems, and also how to approach reversing them
 - Reading the Question Properly
 
+# ARMssembly 1
+**FLAG** - picoCTF{000000e8}
+## Approach
+After downloading `chall_1.s` I figured that I had to look through the function given
+
+```assembly
+func:
+	sub	sp, sp, #32
+	str	w0, [sp, 12]
+	mov	w0, 87
+	str	w0, [sp, 16]
+	mov	w0, 3
+	str	w0, [sp, 20]
+	mov	w0, 3
+	str	w0, [sp, 24]
+	ldr	w0, [sp, 20]
+	ldr	w1, [sp, 16]
+	lsl	w0, w1, w0
+	str	w0, [sp, 28]
+	ldr	w1, [sp, 28]
+	ldr	w0, [sp, 24]
+	sdiv	w0, w1, w0
+	str	w0, [sp, 28]
+	ldr	w1, [sp, 28]
+	ldr	w0, [sp, 12]
+	sub	w0, w1, w0
+	str	w0, [sp, 28]
+	ldr	w0, [sp, 28]
+	add	sp, sp, 32
+	ret
+	.size	func, .-func
+	.section	.rodata
+	.align	3
+```
