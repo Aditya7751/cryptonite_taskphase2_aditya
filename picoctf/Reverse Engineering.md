@@ -175,6 +175,6 @@ cmp	w0, 0
 which makes me sure that w0=232, since the comparison needs to be true for the win
 
 ## Incorrect tangents
-- tried an assembly to c converter, but that didnt work as expected, so I just tried to read func normally after that
+- tried an assembly to c converter, but that didnt work as expected, so I just tried to read func normally after that(note: after solving this the normal way, I checked the assembly to c code, I think it got the order wrong in a few operations, but this was also a viable method to solve after a few adjustments to the code)
 ## Concepts Learnt
 - Basic Assembly
