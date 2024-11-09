@@ -168,3 +168,13 @@ func:
 	.section	.rodata
 	.align	3
 ```
+This code essentially stores w0 at (sp+12),stores 87 at (sp+16),3 at (sp+20) and (sp+24), after a lot of mathematical manipulations, 232-w0 is stored at w0, which is very important to remember, as this w0 is returned. now there is a line in main
+```assembly
+cmp	w0, 0
+```
+which makes me sure that w0=232, since the comparison needs to be true for the win
+
+## Incorrect tangents
+- tried an assembly to c converter, but that didnt work as expected, so I just tried to read func normally after that
+## Concepts Learnt
+- Basic Assembly
