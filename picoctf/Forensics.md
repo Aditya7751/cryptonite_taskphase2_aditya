@@ -26,3 +26,18 @@ this doesnt work so I try `steghide extract -sf ./picture2.bmp -p DUEDILIGENCE` 
 ## Concepts Learnt
 - Using Steganographic Tools
 - File Protocols
+
+# m00nwalk
+**FLAG** - picoCTF{beep_boop_im_in_space}
+## Approach
+I start by googling around the method they used to send the images back from the moon, which turns out to be sstv, a way to send images through radio waves, also after further investigation into how sstv has different modes and how it works, I figure it will use scottie since the hint said its related to the mascot of cmu(scottie).
+
+Then I use a sstv decoder i find on github to decipher the image
+![image](https://github.com/user-attachments/assets/c03a3089-917e-490f-82bd-b05d73b9b74f)
+after turning my screen around a bit I figure out whats written, and I submit that as the flag
+
+## Incorrect Tangents
+- I tried using a lot of sstv software like rxsstv but they always messed up the quality into something unreadable
+## Concepts Learnt
+- Audio Steganography
+
