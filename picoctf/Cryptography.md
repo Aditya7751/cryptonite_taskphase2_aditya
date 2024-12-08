@@ -41,7 +41,36 @@ bytes.fromhex(hex_str).decode('utf-8')
 # C3
 **FLAG** - picoCTF{adlibs}
 ## Approach
-In this problem we are given an encoding python script and corresponding ciphertext
+In this problem we are given an encoding python script and corresponding ciphertext, the encoding algorithim maps any message from lookup1 to lookup2
+
+convert.py
+```python
+import sys
+chars = ""
+from fileinput import input
+for line in input():
+  chars += line
+
+lookup1 = "\n \"#()*+/1:=[]abcdefghijklmnopqrstuvwxyz"
+lookup2 = "ABCDEFGHIJKLMNOPQRSTabcdefghijklmnopqrst"
+
+out = ""
+
+prev = 0
+for char in chars:
+  cur = lookup1.index(char)
+  out += lookup2[(cur - prev) % 40]
+  prev = cur
+
+sys.stdout.write(out)
+```
+This Program essentially works as such:
+- initliaze prev as 0
+- find the current index of the letter being inspected
+- find the difference between cur and prev, and assign characters from lookup2 as such
+- repeat till last character
+
+My Decryption Algorithim
 ```python
 lookup1 = "\n \"#()*+/1:=[]abcdefghijklmnopqrstuvwxyz"
 lookup2 = "ABCDEFGHIJKLMNOPQRSTabcdefghijklmnopqrst"
@@ -58,3 +87,26 @@ for char in chars:
 
 print(decrypted_message)
 ```
+- the (cur-prev)%40 is simply reversed by (cur+prev)%40 after changing the order of the instructions a bit
+- on running this I get the following output which I save as decrypt.txt
+```python
+#asciiorder
+#fortychars
+#selfinput
+#pythontwo
+
+chars = decrypted_message
+b = 1 / 1
+
+for i in range(len(chars)):
+    if i == b * b * b:
+        print (chars[i]) #prints
+        b += 1 / 1
+```
+seeing the self input comment, I just enter this as input again, finally getting the flag
+## Incorrect Tangents
+- Struggled with reversing the modulo operation initially
+- entered original ciphertext into new script
+## Concepts Learnt
+- Reversing Encryption Algorithims
+- Learnt about Algorithim Design and how one should not rely on the secrecy of the algorithim
