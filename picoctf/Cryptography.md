@@ -39,5 +39,22 @@ bytes.fromhex(hex_str).decode('utf-8')
 - Rudimentary Understanding of Wieners Algoritihim
 
 # C3
+**FLAG** - picoCTF{adlibs}
+## Approach
+In this problem we are given an encoding python script and corresponding ciphertext
+```python
+lookup1 = "\n \"#()*+/1:=[]abcdefghijklmnopqrstuvwxyz"
+lookup2 = "ABCDEFGHIJKLMNOPQRSTabcdefghijklmnopqrst"
 
+chars = "DLSeGAGDgBNJDQJDCFSFnRBIDjgHoDFCFtHDgJpiHtGDmMAQFnRBJKkBAsTMrsPSDDnEFCFtIbEDtDCIbFCFtHTJDKerFldbFObFCFtLBFkBAAAPFnRBJGEkerFlcPgKkImHnIlATJDKbTbFOkdNnsgbnJRMFnRBNAFkBAAAbrcbTKAkOgFpOgFpOpkBAAAAAAAiClFGIPFnRBaKliCgClFGtIBAAAAAAAOgGEkImHnIl"
 
+decrypted_message = ""
+prev = 0
+for char in chars:
+    cur = lookup2.index(char)
+    decrypted_char_index = (cur + prev) % 40
+    decrypted_message += lookup1[decrypted_char_index]
+    prev = decrypted_char_index 
+
+print(decrypted_message)
+```
