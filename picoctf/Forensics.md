@@ -41,3 +41,21 @@ after turning my screen around a bit I figure out whats written, and I submit th
 ## Concepts Learnt
 - Audio Steganography
 
+# tunn3l v1s10n
+**FLAG**- 
+On Opening the file on hexedit, the first 2 bytes are `42 4D`, which are the magic bytes for BMP,confirming that the file is a BMP, but changing the extension still doesnt let me open the file, so I analyze the file to see the offset is `BA D0 00 00` which is like almost 54000, the offset for bytes should be 40 or 0x28 in hex, to account for the 54 bytes with file information.
+I open this file to see
+![image](https://github.com/user-attachments/assets/12854091-df7d-44c8-8e2c-88c89d646771)
+then I decided to mess with the width of the image changing it from `32 01` to `40 03` which finally gave me the full image as upon some research I found there has to be an increment of 2
+![image](https://github.com/user-attachments/assets/0abb6009-9cd2-4f55-b5a2-5c34ba7f139a)
+
+## Incorrect Tangents
+- Used Steganographic methods to find the flag
+- Messed up changing the hex codes the first few times
+## Resources Used
+- https://www.ece.ualberta.ca/~elliott/ee552/studentAppNotes/2003_w/misc/bmp_file_format/bmp_file_format.htm
+- https://en.wikipedia.org/wiki/BMP_file_format
+## Concepts Learnt
+- Hex Value Manipulation
+
+
