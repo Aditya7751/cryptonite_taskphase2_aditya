@@ -58,4 +58,18 @@ then I decided to mess with the width of the image changing it from `32 01` to `
 ## Concepts Learnt
 - Hex Value Manipulation
 
+# Mob Psycho 
+**FLAG** - picoCTF{ax8mC0RU6ve_NX85l4ax8mCl_b112ae57}
+## Approach
+This Challenge provides an APK file, and provides an hint for us to unzip it
+
+after unzipping the file I see a lot of folders and files in it, so I just search for flag in the search bar
+![image](https://github.com/user-attachments/assets/62267543-69df-445b-b93b-d6b3c791d181)
+after opening this file I am presented with `7069636f4354467b6178386d433052553676655f4e5838356c346178386d436c5f62313132616535377d` which is probably hex encoded so then I put it through a hex to text converter
+![image](https://github.com/user-attachments/assets/2fa2d3a9-a67d-474e-9f13-e0f89e673ea1)
+## Incorrect Tangents
+- actually manually tried to go through the folders before realizing that I can just search for it
+## Concepts Learnt
+- APKs are bundles of files
+
 
