@@ -26,4 +26,11 @@ In a final, anguished act of loyalty to the world, I shall whisper the password 
 ```
 and this is how I got the flag
 
-#
+# U ARe T Detective
+**FLAG** - nite{n0n_std_b4ud_r4t3s_ftw}
+## Approach
+I download the signal.sr file and after some researching found out that its associated with a software called sigrok used to store session data and metadata, so after opening the file on sigrok
+![image](https://github.com/user-attachments/assets/931fcde2-9b1a-4f60-8ede-9bacd4b6c44e)
+I notice that there is something in D1 which is more apparent after zooming, from the name of the challenge I figured it would have something to do with a UART decoder but I got frame errors from trying that. again after some further digging i found out we have to change the baude rate according to bit duration , which turned out to be like around 187.5 ns, with a baude rate of 5333333, removing the error and after changing the data from hexadecimal to ascii, I finally got the flag
+
+
