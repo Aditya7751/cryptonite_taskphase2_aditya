@@ -202,4 +202,120 @@ and then finally I convert this hexadecimal number to text using another online 
 ## Concepts Learnt
 - Mathematical Manipulation to undo cryptography
 
-#
+# Custom Encryption
+**FLAG** - picoCTF{custom_d2cr0pt6d_66778b34}
+## Approach
+We are given a custom_encryption.py file and flag.enc file with the following contents:
+
+custom_encryption.py
+```python
+from random import randint
+import sys
+
+
+def generator(g, x, p):
+    return pow(g, x) % p
+
+
+def encrypt(plaintext, key):
+    cipher = []
+    for char in plaintext:
+        cipher.append(((ord(char) * key*311)))
+    return cipher
+
+
+def is_prime(p):
+    v = 0
+    for i in range(2, p + 1):
+        if p % i == 0:
+            v = v + 1
+    if v > 1:
+        return False
+    else:
+        return True
+
+
+def dynamic_xor_encrypt(plaintext, text_key):
+    cipher_text = ""
+    key_length = len(text_key)
+    for i, char in enumerate(plaintext[::-1]):
+        key_char = text_key[i % key_length]
+        encrypted_char = chr(ord(char) ^ ord(key_char))
+        cipher_text += encrypted_char
+    return cipher_text
+
+
+def test(plain_text, text_key):
+    p = 97
+    g = 31
+    if not is_prime(p) and not is_prime(g):
+        print("Enter prime numbers")
+        return
+    a = randint(p-10, p)
+    b = randint(g-10, g)
+    print(f"a = {a}")
+    print(f"b = {b}")
+    u = generator(g, a, p)
+    v = generator(g, b, p)
+    key = generator(v, a, p)
+    b_key = generator(u, b, p)
+    shared_key = None
+    if key == b_key:
+        shared_key = key
+    else:
+        print("Invalid key")
+        return
+    semi_cipher = dynamic_xor_encrypt(plain_text, text_key)
+    cipher = encrypt(semi_cipher, shared_key)
+    print(f'cipher is: {cipher}')
+
+
+if __name__ == "__main__":
+    message = sys.argv[1]
+    test(message, "trudeau")
+```
+
+flag.enc
+```
+a = 95
+b = 21
+cipher is: [237915, 1850450, 1850450, 158610, 2458455, 2273410, 1744710, 1744710, 1797580, 1110270, 0, 2194105, 555135, 132175, 1797580, 0, 581570, 2273410, 26435, 1638970, 634440, 713745, 158610, 158610, 449395, 158610, 687310, 1348185, 845920, 1295315, 687310, 185045, 317220, 449395]
+```
+
+so we are given the values if the randomly generated a and b, and also the values of p and g, the first thing I do is make a script to reverse the encrypt() function , which is fairly simple since its just dividing by key*311
+
+```python
+def decrypt(cipherlist,key):
+    plaintext=""
+    for i in cipherlist:
+        plaintext+=chr(i//311//key)
+    
+    return plaintext
+```
+now comes the hard part which is figuring out how to decrypt the dynamic_xor_encrypt function, which I did by just cycling through the ciphertext instead of the plaintext and not reversing the ciphertext when parsing through it
+
+```python
+semiplaintext=decrypt(cipher,key)
+
+def dynamic_xor_decrypt(ciphertext, text_key):
+    plain_text = ""
+    key_length = len(text_key)
+    for i, char in enumerate(ciphertext):
+        key_char = text_key[i % key_length]
+        encrypted_char = chr(ord(char) ^ ord(key_char))
+        plain_text += encrypted_char
+    return plain_text
+
+print(dynamic_xor_decrypt(semiplaintext,"trudeau"))
+```
+Although this got me the flag in the reverse order
+```bash
+PS C:\Users\Aditya> & C:/Users/Aditya/AppData/Local/Programs/Python/Python313/python.exe c:/Users/Aditya/Downloads/dec.py
+}43b87766_d6tp0rc2d_motsuc{FTCocip
+```
+
+## Incorrect Tangents
+- Initially I tried to use the dynamic xor encrypt function directly on semiplaintext but that didnt work, so fixed it by changing the function slightly using ciphertext instead of ciphertext[::-1}
+## Important Concepts
+- Learnt a lot about XORs in this challenge
+- 
